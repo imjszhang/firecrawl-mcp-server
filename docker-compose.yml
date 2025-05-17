@@ -15,7 +15,7 @@ services:
       - dokploy-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.firecrawl-service.rule=Host(`firecrawl.${DOMAIN:-dokploy.localhost}`)"
+      - "traefik.http.routers.firecrawl-service.rule=Host(`mcp.${DOMAIN:-firecrawl.localhost}`)"
       - "traefik.http.routers.firecrawl-service.entrypoints=web"
       - "traefik.http.services.firecrawl-service.loadbalancer.server.port=3000"
       - "traefik.docker.network=dokploy-network"
