@@ -19,6 +19,13 @@ services:
       - "traefik.http.routers.firecrawl-service.entrypoints=web"
       - "traefik.http.services.firecrawl-service.loadbalancer.server.port=3000"
       - "traefik.docker.network=dokploy-network"
+      # SSE连接中间件配置
+      - "traefik.http.middlewares.sse-handler.headers.customResponseHeaders.X-Accel-Buffering=no"
+      - "traefik.http.middlewares.sse-handler.headers.customResponseHeaders.Cache-Control=no-cache"
+      - "traefik.http.middlewares.sse-handler.headers.customResponseHeaders.Connection=keep-alive"
+      - "traefik.http.middlewares.sse-handler.compress.enabled=false"
+      # 应用中间件到路由
+      - "traefik.http.routers.firecrawl-service.middlewares=sse-handler"
    
 networks:
   dokploy-network:
