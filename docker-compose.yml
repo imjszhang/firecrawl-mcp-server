@@ -1,0 +1,25 @@
+services:
+  firecrawl-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+    image: firecrawl-service:latest
+    container_name: firecrawl-service
+    restart: always
+    expose:
+      - '3000'
+    environment:
+      - CLOUD_SERVICE=true
+      - SSE_LOCAL=false
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.firecrawl-service.rule=Host(`firecrawl.${DOMAIN:-dokploy.localhost}`)"
+      - "traefik.http.routers.firecrawl-service.entrypoints=web"
+      - "traefik.http.services.firecrawl-service.loadbalancer.server.port=3000"
+      - "traefik.docker.network=dokploy-network"
+   
+networks:
+  dokploy-network:
+    external: true 
