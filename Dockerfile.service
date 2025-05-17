@@ -2,25 +2,19 @@ FROM node:22-slim
 
 WORKDIR /app
 
+# 复制项目文件
 COPY package.json package-lock.json* ./
 
-# 先只安装生产依赖，不会触发prepare脚本
-RUN npm install --only=production
+# 只安装生产依赖
+RUN npm install
 
-# 再单独安装开发依赖中的typescript
-RUN npm install --no-save typescript
-
-COPY tsconfig.json ./
-COPY src ./src
-
-# 直接运行tsc命令进行构建，然后手动添加执行权限
-RUN npx tsc && chmod +x dist/index.js
-
+# 设置环境变量
 ENV CLOUD_SERVICE=true
 ENV PORT=3000
+ENV SSE_LOCAL=false
 
-# Expose the port
+# 暴露端口
 EXPOSE 3000
 
-# Run the server
-CMD ["node", "dist/index.js"]
+# 运行服务器
+CMD ["node", "server.js"]
