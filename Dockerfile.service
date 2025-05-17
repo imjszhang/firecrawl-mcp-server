@@ -9,7 +9,9 @@ RUN npm ci
 
 COPY tsconfig.json ./
 COPY src ./src
-RUN npm run build
+
+# 直接运行tsc命令进行构建，然后手动添加执行权限
+RUN npx tsc && chmod +x dist/index.js
 
 ENV CLOUD_SERVICE=true
 ENV PORT=3000
