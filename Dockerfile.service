@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY package.json package-lock.json* ./
 
-# 安装依赖
-RUN npm ci
+# 安装依赖，但禁用prepare脚本
+RUN npm ci --no-prepare
 
 COPY tsconfig.json ./
 COPY src ./src
