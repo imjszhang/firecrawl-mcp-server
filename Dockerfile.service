@@ -35,4 +35,4 @@ RUN npm ci --omit=dev --ignore-scripts
 
 
 # Specify the command to run the application
-ENTRYPOINT ["node", "server.js"]
+ENTRYPOINT ["node", "dist/index.js"]
